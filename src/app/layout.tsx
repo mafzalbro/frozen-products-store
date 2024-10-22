@@ -1,17 +1,25 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { ThemeProvider } from "@/components/theme/theme-provider"
+import { Toaster } from "@/components/ui/toaster"
+
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
+import Navbar from "@/components/layout/navbar/navbar";
+import { cookies } from "next/headers";
+
+const outfit = localFont({
+  src: "./fonts/Outfit.ttf",
+  variable: "--font-outfit",
   weight: "100 900",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+
+const data = cookies().get('authToken')
+const userString = cookies().get('user')
+const token = data?.value
+const userData: string | undefined = userString?.value
+
+const user = userData ? JSON.parse(userData) : ''
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,11 +32,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${outfit.className} antialiased flex justify-center items-center overflow-x-hidden`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+
+          <section className="max-w-screen-xl">
+            <Navbar user={user} token={token ? token : ''}/>
+            {children}
+            <Toaster />
+          </section>
+        </ThemeProvider>
       </body>
     </html>
   );

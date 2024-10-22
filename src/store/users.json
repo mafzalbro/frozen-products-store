@@ -1,0 +1,15 @@
+[
+  {
+    "email": "maf415415@gmail.com",
+    "username": "Vella Bro",
+    "password": "$2a$10$JTKADBE5MFj/JenDImLbFO2vnl/QVvg8EDjuDFgALY4gwlsHXhmA6",
+    "fullName": "Muhammad Afzal",
+    "phone": "03214214595",
+    "address": {
+      "street": "0134",
+      "city": "Lahore",
+      "state": "Pubjab",
+      "zip": "54000"
+    }
+  }
+]
