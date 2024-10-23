@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { EnterIcon } from "@radix-ui/react-icons"
-import { login } from "@/actions/auth"
+import { login, verifyAuth } from "@/actions/auth"
 import { useRouter } from "next/navigation"
 
 // Schema allowing username or email
@@ -39,7 +39,11 @@ const FormSchema = z.object({
 
 export default function LoginPage() {
   const router = useRouter()
-
+  verifyAuth().then(auth => {
+    if(auth.isAuthenticated){
+      router.push('/')
+    }
+  })
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

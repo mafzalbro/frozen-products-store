@@ -18,7 +18,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { EnterIcon } from "@radix-ui/react-icons"
-import { register } from "@/actions/auth"
+import { register, verifyAuth } from "@/actions/auth"
+import { useRouter } from "next/navigation"
 
 // Schema for sign-up form validation
 const FormSchema = z.object({
@@ -45,6 +46,12 @@ const FormSchema = z.object({
 })
 
 export default function SignupPage() {
+  const router = useRouter()
+  verifyAuth().then(auth => {
+    if(auth.isAuthenticated){
+      router.push('/')
+    }
+  })
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

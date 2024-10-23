@@ -136,12 +136,8 @@ export const login = async (data: { userInput: string; password: string }) => {
 // Logout
 export const logout = async () => {
   // Clear the auth token cookie
-  cookies().set(COOKIE_NAME, "", {
-    httpOnly: true,
-    path: "/",
-    maxAge: -1, // Remove the cookie
-  });
-
+  cookies().delete(COOKIE_NAME);
+  cookies().delete(COOKIE_USER_NAME);
   return { success: true, message: "Successfully logged out" };
 };
 
